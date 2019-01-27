@@ -2,10 +2,12 @@
 
 **Q1. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 __(1)__
 x.each_line { |line| puts line }
+```
 
+```
 [Execution Result]
 apple
 banana
@@ -14,25 +16,25 @@ banana
 **Which option can be inserted into `__(1)__`? (Choose one.)**
 
 *A:*
-```
+```ruby
 require "stringbuffer"
 x = StringBuffer.new("apple\banana\n")
 ```
 
 *B:*
-```
+```ruby
 require "stringio"
 x = StringIO.new("apple\nbanana\n")
 ```
 
 *C:*
-```
+```ruby
 require "strio"
 x = StrIO.new("apple\banana\n")
 ```
 
 *D:*
-```
+```ruby
 require "mockio"
 x = MockIO.new("apple\banana\n")
 ```
@@ -41,13 +43,13 @@ x = MockIO.new("apple\banana\n")
 
 **A1:** (B)
 
-The `StringIO` object (from the standard library) provides an IO-like object that operates on strings rather than file/network/stdio streams. This object can be useful for testing code that relies on I/O operations.
+The `StringIO` object (from the standard library) provides an IO-like object that operates on strings rather than file/network/stdio streams. **This object can be useful for testing code that relies on I/O operations.**
 
 -----------------------------------------------------------------
 
 **Q2. Given the following code:**
 
-```
+```ruby
 module I
 end
 
@@ -86,12 +88,14 @@ Using `prepend` is only necessary when you either want to override some definiti
 
 -----------------------------------------------------------------
 
-**Q3. Assume that the following code must have the stated execution result:** 
+**Q3. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 x = __(1)__
 p x + 1
+```
 
+```
 [Execution Result]
 (4/3)
 ```
@@ -114,9 +118,9 @@ Suffixing a literal number with `r` tells Ruby to construct a `Rational` object.
 
 -----------------------------------------------------------------
 
-**Q4. Assume that the following code must have the stated execution result:** 
+**Q4. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 p ("aaaaaa".."zzzzzz").lazy.select { |e| e.end_with?("f") }.__(1)__
 
 [Execution Result]
@@ -141,7 +145,7 @@ The `take()` method is defined by `Enumerator::Lazy`, and so execution is deferr
 
 An `Enumerator::Lazy` object inherits from `Enumerator` and also includes the `Enumerable` module.
 
-Calling an `Enumerable` method that isn't overridden by `Enumerator::Lazy` will force enumeration. This is why calling `first(3)` does not require (or allow) calling the `.force` method afterwards: Its return value is an `Array`, not an `Enumerable::Lazy` object, and the operation is executed immediately.
+Calling an `Enumerable` method that isn't overridden by `Enumerator::Lazy` will force enumeration. This is why calling `first(3)` does not require (or allow) calling the `.force` method afterwards: Its return value is an `Array`, not an `Enumerator::Lazy` object, and the operation is executed immediately.
 
 Note that the `force()` method on `Enumerator::Lazy` is just an alias for `Enumerable#to_a`.
 
@@ -149,7 +153,7 @@ Note that the `force()` method on `Enumerator::Lazy` is just an alias for `Enume
 
 **Q5: Given the following code:**
 
-```
+```ruby
 arr = []
 
 f = Fiber.new {
@@ -173,7 +177,7 @@ p arr
 
 *C:* `["X", "A", "B", "C", "Y"]`
 
-*D:* `["X", "A", nil, "Y"]` 
+*D:* `["X", "A", nil, "Y"]`
 
 -----------------------------------------------------------------
 
@@ -189,7 +193,7 @@ If the fiber yields, then the next call to `Fiber#resume` would continue executi
 
 **Q6. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 class A
   def foo
     __1__
@@ -203,7 +207,9 @@ class A
 end
 
 p A.new.foo
+```
 
+```
 [Execution Result]
 "baz"
 ```
@@ -224,13 +230,13 @@ p A.new.foo
 
 Private methods can only be invoked in functional style from within a class definition.
 
-Calling `self.some_method()` attempts to invoke a method via an object's external API, therefore it will raise an exception if `some_method()` is a private method.
+**Calling `self.some_method()` attempts to invoke a method via an object's external API, therefore it will raise an exception if `some_method()` is a private method.**
 
 -----------------------------------------------------------------
 
-**Q7. Assume that the following code must have the stated execution result.** 
+**Q7. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 class Greeter
   class << self
     def hello
@@ -240,7 +246,10 @@ class Greeter
 end
 
 __(1)__
+```
 
+
+```
 [Execution Result]
 Hello there!
 ```
@@ -263,7 +272,7 @@ The `class << ...` syntax is used to open up the singleton class of an object, a
 
 Because classes are objects in Ruby, it is possible to add methods directly to classes in this way, for example:
 
-```
+```ruby
 class << Greeter
   def hello
     # ...
@@ -277,7 +286,7 @@ But the more common way is to use `class << self` from within a class body as sh
 
 **Q8: Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 __(1)__
 
 p multiply_by(4) { 2 + 3 }
@@ -326,18 +335,20 @@ end
 
 Every method in Ruby may accept a block, whether it is explicitly specified in the method signature or not.
 
-The `yield` keyword is used for calling a block implicitly.
+The `yield` keyword is used for calling a block _implicitly_.
 The `&block` syntax is used for converting the block into a `Proc` object, which can then be invoked via `call()`, or passed along to some other method, etc.
 
 -----------------------------------------------------------------
 
-**Q9: Assume that the following code must have the stated execution result.** 
+**Q9: Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 __(1)__
 
 p sum { |e| e << 1 << 5 << 7 }
+```
 
+```
 [Execution Result]
 13
 ```
@@ -346,45 +357,45 @@ p sum { |e| e << 1 << 5 << 7 }
 
 *A:*
 
-```
+```ruby
 def sum(&block)
   array = []
-  
+
   block(array)
-  
+
   array.reduce(:+)
 end
 ```
 
 *B:*
-```
+```ruby
 def sum(&block)
   array = []
-  
+
   block.call(array)
-  
+
   array.reduce(:+)
 end
 ```
 
 *C:*
-```
+```ruby
 def sum
   array = []
-  
+
   yield(array)
-  
+
   array.reduce(:+)
 end
 ```
 
 *D:*
-```
+```ruby
 def sum
   array = []
-  
+
   yield.call(array)
-  
+
   array.reduce(:+)
 end
 ```
@@ -398,9 +409,9 @@ end
 
 -----------------------------------------------------------------
 
-**Q10. Given the following code:** 
+**Q10. Given the following code:**
 
-```
+```ruby
 class A
   @@x = 1
 end
@@ -435,7 +446,7 @@ p B.x
 
 **A10:** (B)
 
-Class variables are shared not just within a single class, but also downwards through the inheritance hierachy. So when `A` defines `@@x`, that variable is shared with its child classes `B` and `C`, and all three reference the same variable.
+Class variables are shared not just within a single class, but also downwards through the inheritance hierarchy. So when `A` defines `@@x`, that variable is shared with its child classes `B` and `C`, and all three reference the same variable.
 
 Class variables are one of the more complex features of Ruby, and so this study guide does not cover anything beyond their most basic behaviors.
 
@@ -443,7 +454,7 @@ Class variables are one of the more complex features of Ruby, and so this study 
 
 **Q11. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 words = ["apple", "banana", "cabbage"]
 pop = Proc.new { words.pop }
 3.times{ puts __(1)__ }
@@ -470,13 +481,15 @@ apple
 
 **A11:** (D)
 
-A `Proc` object encapsulates a block and allows it to be called later via `Proc#call`. Each `Proc` object forms a closure, which binds the block to the local variables that were in scope wherever the `Proc` is defined. 
+A `Proc` object encapsulates a block and allows it to be called later via `Proc#call`.
+
+**Each `Proc` object forms a closure, which binds the block to the local variables that were in scope wherever the `Proc` is defined**.
 
 -----------------------------------------------------------------
 
 **Q12. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 words = ["apple", "banana", "cabbage"]
 pop = __(1)__{ words.pop }
 3.times{ puts pop.call }
@@ -501,9 +514,9 @@ apple
 
 **A12:** (A) and (C)
 
-Although `Proc.new` and `lambda` each create a `Proc` object, they are not identical to one another in behavior. 
+Although `Proc.new` and `lambda` each create a `Proc` object, they are not identical to one another in behavior.
 
-- A `Proc` generated via `lambda` is strict about its accepted arguments, whereas an ordinary `Proc` will ignore extra unused arguments. 
+- A `Proc` generated via `lambda` is strict about its accepted arguments, whereas an ordinary `Proc` will ignore extra unused arguments.
 
 - A `return` call from within a `lambda` returns from the lambda itself, whereas a `return` call from an ordinary `Proc` object will return from the method that invoked the block.
 
@@ -511,10 +524,12 @@ Although `Proc.new` and `lambda` each create a `Proc` object, they are not ident
 
 **Q13. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 add = __(1)__
 puts add.call("hello")
+```
 
+```
 [Execution Result]
 HELLO
 ```
@@ -539,7 +554,7 @@ The `->(...) { }` (lambda literal) syntax is a shorthand notation equivalent to 
 
 **Q14. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 old_data = [1,2,3]
 old_data.freeze
 
@@ -548,7 +563,9 @@ new_data = old_data.__(1)__
 new_data << 4
 
 p new_data
+```
 
+```
 [Execution Result]
 
 [1,2,3,4]
@@ -574,7 +591,7 @@ The frozen status of an object is preserved by `clone`, whereas `dup` will creat
 
 **Q15. Given the following code:**
 
-```
+```ruby
 original = [[1,2],[3,4]]
 
 copy = original.dup
@@ -595,15 +612,15 @@ p copy
 
 **A15:** (B)
 
-Both `Object#dup` and `Object#clone` produce shallow copies. In the case of an `Array`, this means that the array itself is copied, but the objects within the array are not. So in this specific exaple `original[0]` and `copy[0]` both still reference the same object.
+Both `Object#dup` and `Object#clone` produce shallow copies. In the case of an `Array`, this means that the array itself is copied, but the objects within the array are not. So in this specific example `original[0]` and `copy[0]` both still reference the same object.
 
-One convention that can be used for creating deep copies in Ruby is to serialize and then deserialize an object, using the `Marsal` core class, e.g. `copy = Marsal.load(Marhal.dump(original))`.
+One convention that can be used for creating deep copies in Ruby is to serialize and then deserialize an object, using the `Marshal` core class, e.g. `copy = Marshal.load(Marshal.dump(original))`.
 
 -----------------------------------------------------------------
 
 **Q16. Assume that the following code must have the stated execution result:**
 
-```
+```ruby
 obj = Object.new
 
 def obj.hello
@@ -613,7 +630,9 @@ end
 copy = __(1)__
 
 copy.hello
+```
 
+```
 [Execution Result]
 Hi!
 ```
@@ -642,7 +661,7 @@ Also note that:
 
 **Q17. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 class ShoppingList
   def initialize
     @items = []
@@ -664,7 +683,9 @@ list.add_item("Bread")
 list.add_item("Eggs")
 
 puts list
+```
 
+```
 [Execution Result]
 - Milk
 - Bread
@@ -685,7 +706,7 @@ puts list
 
 **A17:** (A)
 
-Many Ruby methods (including `Kernel#puts`) call `to_s` in order to convert objects into a string representation. The default implementation of `Object#to_s` produces simple, generic output which looks like this: 
+Many Ruby methods (including `Kernel#puts`) call `to_s` in order to convert objects into a string representation. The default implementation of `Object#to_s` produces simple, generic output which looks like this:
 
 `#<ShoppingList:0x007fb651918610>`
 
@@ -695,7 +716,7 @@ When the `to_s` method is overidden in other objects, it can be used to provide 
 
 **Q18. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 class ShoppingList
   def initialize
     @items = []
@@ -717,7 +738,9 @@ list.add_item("Bread")
 list.add_item("Eggs")
 
 p list
+```
 
+```
 [Execution Result]
 ShoppingList (#70338683731980)
   @items: ["Milk", "Bread", "Eggs"]
@@ -761,7 +784,7 @@ The `to_str` method is rarely implemented in practice, because it is only useful
 
 **Q20. Given the following code:**
 
-```
+```ruby
 a, b, c = ["apple", "banana", "carrot", "daikon"]
 
 p c
@@ -787,7 +810,7 @@ When an array is used on the right hand side of a parallel assignment statement,
 
 **Q21. Given the following code:**
 
-```
+```ruby
 a, b, *c = ["apple", "banana", "carrot", "daikon"]
 
 p c
@@ -819,7 +842,7 @@ The splat operator (`*`) can be used to place all remaining rvalues into an arra
 ```
 
 *A:*
-```
+```ruby
 def fx(*args)
   p(args)
 end
@@ -827,7 +850,7 @@ fx(*["apple", "banana", "carrot"])
 ```
 
 *B:*
-```
+```ruby
 def fx(*args)
   p(args)
 end
@@ -835,7 +858,7 @@ fx(["apple", "banana", "carrot"])
 ```
 
 *C:*
-```
+```ruby
 def fx(*args)
   p(args)
 end
@@ -843,7 +866,7 @@ fx("apple", "banana", "carrot")
 ```
 
 *D:*
-```
+```ruby
 def fx(*args)
   p(*args)
 end
@@ -860,13 +883,15 @@ The splat operator (`*`) when used with a method parameter makes it so that all 
 
 **Q23. Given the following code:**
 
-```
+```ruby
 def add(x,y)
   x + y
 end
 
 __(1)__
+```
 
+```
 [Execution Result]
 5
 ```
@@ -887,12 +912,38 @@ __(1)__
 
 When the splat operator (`*`) is called on an array in a method call, the array is expanded and treated as an arguments list to be passed to the method.
 
+The splat operator converts the array into a “bare list”, which is only valid in a certain context.
 
+Example:
+
+```ruby
+my_array = [1, 2, 3]
+# => [1, 2, 3]
+
+my_other_array = [*my_array]
+# => [1, 2, 3]
+
+yet_other_array =[my_array]
+# => [[1, 2, 3]]
+```
+
+The double splat operator (`**`) transforms a hash into a list of named parameters.
+
+```ruby
+my_hash = { a: 'a', b: 'b' }
+# => {:a=>"a", :b=>"b"}
+
+my_other_hash = { **my_hash, c: 'c' }
+# => => {:a=>"a", :b=>"b", :c=>"c"}
+
+yet_other_hash = { my_hash }
+# SyntaxError
+```
 -----------------------------------------------------------------
 
 **Q24. Given the following code:**
 
-```
+```ruby
 def fx(a:, b: "apple")
   p a
   p b
@@ -929,7 +980,7 @@ When a required keyword argument is not specified, an `ArgumentError` is raised.
 
 **Q25. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 def add(x:, y:, **params)
   z = x + y
 
@@ -937,7 +988,9 @@ def add(x:, y:, **params)
 end
 
 __(1)__
+```
 
+```
 [Execution Result]
 7
 ```
@@ -958,7 +1011,7 @@ __(1)__
 
 **A25:**  (B), (C) and (D)
 
-When working with methods that use keyword parameters, the `**` operator can be used to capture any keywords which were not explicitly specified into an optional `Hash`.
+When working with methods that use **keyword parameters**, the `**` operator can be used to capture any keywords which were not explicitly specified into an optional `Hash`.
 
 The `**` operator can also be used when calling a method to convert a hash into a keyword arguments list.
 
@@ -966,7 +1019,7 @@ The `**` operator can also be used when calling a method to convert a hash into 
 
 **Q26: Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 class Speaker
   @message = "Hello!"
 
@@ -980,7 +1033,9 @@ class Speaker
 end
 
 __(1)__
+```
 
+```
 [Execution Result]
 Hello!
 ```
@@ -1003,7 +1058,7 @@ Because classes are objects in Ruby, it is possible to define class instance var
 
 All objects in Ruby also have a *singleton class* associated with them, even class objects.
 
-In this example, there is an instance variable named `@message`on the `Speaker` class as well as on the singleton class of `Speaker`. These are two seperate variables.
+In this example, there is an instance variable named `@message`on the `Speaker` class as well as on the singleton class of `Speaker`. These are two separate variables.
 
 The singleton method `Speaker.speak` is evaluated in the context of the `Speaker` class, and so `@message` refers to the instance variable defined within the `Speaker` class definition, and not the instance variable defined within the singleton class of `Speaker`.
 
@@ -1011,7 +1066,7 @@ The singleton method `Speaker.speak` is evaluated in the context of the `Speaker
 
 **Q27. Given the following code:**
 
-```
+```ruby
 class Speaker
   @message = "Hello!"
 
@@ -1045,7 +1100,7 @@ In this example `class << Speaker` reopens the singleton class of `Speaker`, and
 
 **Q28. Assume that the following code must have the stated execution result.**
 
-```
+```ruby
 def x
   puts "x"
 end
@@ -1067,7 +1122,9 @@ __(1)__ do
 end
 
 puts "done!"
+```
 
+```
 [Execution Result]
 x
 y
@@ -1089,7 +1146,7 @@ done!
 
 **A28:** (C)
 
-Within a `catch` block, code executes normally until a `throw` statement is executed. Then if the symbol passed via `throw` matches the `catch` symbol, Ruby terminates the block and continues running whatever follows it. 
+Within a `catch` block, code executes normally until a `throw` statement is executed. Then if the symbol passed via `throw` matches the `catch` symbol, Ruby terminates the block and continues running whatever follows it.
 
 If a `catch` block does not match the `throw`, Ruby will continue in an inside-out fashion through any nested `catch` blocks until it finds one that matches the thrown symbol or reaches the top-level, where an uncaught through will cause an exception to be raised.
 
@@ -1198,17 +1255,17 @@ end
 Bare rescue
 ```
 
-*B:* 
+*B:*
 ```
 StandardError rescue
 ```
 
-*C:* 
+*C:*
 ```
 AnError rescue
 ```
 
-*D:* 
+*D:*
 ```
 Exception rescue
 ```
@@ -1225,7 +1282,7 @@ Exception rescue
 
 A bare `rescue` statement matches `StandardError` and its descendents. As such, it will not match any exceptions which inherit from the `Exception` base class directly.
 
-Within a single `begin/end` block, only the the first matched `rescue` clause will be run, even if there are multiple clauses that match. 
+Within a single `begin/end` block, only the the first matched `rescue` clause will be run, even if there are multiple clauses that match.
 
 -----------------------------------------------------------------
 
@@ -1254,17 +1311,17 @@ end
 Bare rescue
 ```
 
-*B:* 
+*B:*
 ```
 StandardError rescue
 ```
 
-*C:* 
+*C:*
 ```
 AnError rescue
 ```
 
-*D:* 
+*D:*
 ```
 Exception rescue
 ```
@@ -1319,12 +1376,12 @@ The `=>` separator can be used within a `rescue` clause to define a variable tha
 CustomError = Class.new(StandardError)
 
 def boom
-  raise CustomError 
+  raise CustomError
 rescue
   raise
 end
 
-begin 
+begin
   boom
 rescue => e
   p e.class
@@ -1411,7 +1468,7 @@ class Identity
   def self.this_object
     self
   end
-  
+
   def this_object
     self
   end
@@ -1429,7 +1486,7 @@ p c == d
 
 **Which option corresponds to the execution result? (Choose one.)**
 
-*A:* 
+*A:*
 
 ```
 true
@@ -1469,7 +1526,7 @@ class Identity
   def self.this_object
     self.class
   end
-  
+
   def this_object
     self
   end
@@ -1545,7 +1602,7 @@ p Identity.new.this_object.class
 
 **A38:** (D)
 
-Even in complex ancestry chains including module mixins and class inheritance, `self` will always refer to receiving object within the current context. 
+Even in complex ancestry chains including module mixins and class inheritance, `self` will always refer to receiving object within the current context.
 
 In this particular example, that means that even though the `this_object` is defined by the `Mixin` module, it is included into and called on an instance of the `Identity` class, and therefore `self` refers to that specific object.
 
@@ -1626,13 +1683,13 @@ Hello World!
 
 **Which of the following options can be inserted into `__(1)__`? (Choose one.)**
 
-*A:* 
+*A:*
 `Mixin.greet`
 
-*B:* 
+*B:*
 `SomeClass.new.greet`
 
-*C:* 
+*C:*
 `SomeClass.greet`
 
 *D:* `Mixin.new.greet`
@@ -1674,13 +1731,13 @@ Hello World!
 
 **Which of the following options can be inserted into `__(1)__`? (Choose one.)**
 
-*A:* 
+*A:*
 `Mixin.greet`
 
-*B:* 
+*B:*
 `SomeClass.new.greet`
 
-*C:* 
+*C:*
 `SomeClass.greet`
 
 *D:* `Mixin.new.greet`
@@ -1717,7 +1774,7 @@ Hello World!
 
 **Which of the following options CANNOT be inserted into `__(1)__`? (Choose one.)**
 
-*A:* 
+*A:*
 
 ```
 public :greet
@@ -1852,9 +1909,9 @@ To understand `Enumerable` better, it can help to think about how each of its fe
 ```
 def select(&b)
   matched = []
-  
+
   each { |e| matched << e if b.call(e) }
-  
+
   matched
 end
 ```
@@ -1874,7 +1931,7 @@ class TShirt
   def initialize(size)
     @size = size
   end
-  
+
   attr_reader :size
 
   def <=>(other)
